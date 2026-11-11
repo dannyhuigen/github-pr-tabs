@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "GitHub PR Inbox Tabs",
+  "version": "1.0.0",
+  "description": "Opens every PR from github.com/pulls/inbox in a tab group per inbox section.",
+  "permissions": [
+    "tabs",
+    "tabGroups",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://github.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "GitHub PR inbox",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "Sync PR inbox into tab groups"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  }
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root { --coral: #ff5f3f; --plum: #29061b; --peach: #fde4d6; --cream: #fef0e9; --muted: #7a6e74; }
+  body { margin: 0; min-width: 240px; font: 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--plum); background: var(--cream); }
+  button { display: block; width: 100%; padding: 8px 12px; border: 0; background: none; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  button:hover { background: var(--peach); }
+  button:disabled { color: var(--muted); cursor: default; }
+  hr { margin: 4px 0; border: 0; border-top: 1px solid var(--peach); }
+  #close { color: var(--coral); font-weight: 600; }
+  #status { padding: 6px 12px; color: var(--muted); min-height: 1.2em; }
+  @media (prefers-color-scheme: dark) {
+    body { color: var(--cream); background: var(--plum); }
+    button:hover { background: #3d1a2e; }
+    button:disabled { color: #a08a94; }
+    hr { border-top-color: #3d1a2e; }
+    #status { color: #cfc5ca; }
+  }
+</style>
+</head>
+<body>
+  <div id="menu"></div>
+  <hr>
+  <button id="close">Close all tabs</button>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
