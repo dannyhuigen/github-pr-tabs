@@ -1,45 +1,49 @@
 # GitHub PR Inbox Tabs
 
-Chrome extension. One click scrapes <https://github.com/pulls/inbox> and makes sure every PR
-listed there is open in a tab, grouped per inbox section.
+Chrome extension that keeps every pull request from your
+[GitHub PR inbox](https://github.com/pulls/inbox) open in a tab, sorted into one
+tab group per inbox section.
 
-Chrome cannot nest tab groups, so instead of one `github` group with sub-groups you get one
-group per section, all prefixed `github · `:
+<p align="center"><img src="icons/icon-128.png" width="96" alt=""></p>
 
-| Group                                  | Colour |
-| -------------------------------------- | ------ |
-| `github · Needs your review`           | red    |
-| `github · Needs your teams' review`    | orange |
-| `github · Your drafts`                 | grey   |
-| `github · Waiting for review or checks`| yellow |
-| `github · Needs action`                | pink   |
-| `github · Ready to merge`              | green  |
+## How it works
+
+Click the toolbar icon and pick a menu item:
+
+| Menu item         | Does                                               |
+| ----------------- | -------------------------------------------------- |
+| **Get all**       | Sync every inbox section                           |
+| **Get _section_** | Sync one section (Needs your review, Your drafts…) |
+| **Close all tabs**| Close every tab the extension opened               |
+
+A sync:
+
+1. Reloads the inbox page in a background tab and waits until every section,
+   including "Load more", has finished loading.
+2. Opens a tab for each PR that is not already open anywhere.
+3. Files the tabs into a group named `github · <section>`, one group per section.
+4. Collapses the groups and moves them to the end of the tab strip.
+
+Tabs you already had open are reused, never duplicated. Tabs in groups you made
+yourself are left alone. A sync never closes anything.
+
+Chrome cannot nest tab groups, so sections become sibling groups rather than
+children of one `github` group.
 
 ## Install
 
-1. Open `chrome://extensions`, enable **Developer mode**.
-2. **Load unpacked** → pick this folder.
-3. Pin the extension. Click it (or press `Alt+Shift+P`) for the menu:
-   - **Get all** – sync every section.
-   - **Get <section>** – sync one section only.
-   - **Close all tabs** – close every tab in a `github · ` group, which removes the groups.
+1. Clone or download this repo.
+2. Open `chrome://extensions`, turn on **Developer mode**.
+3. Click **Load unpacked** and pick the folder.
+4. Pin the icon. `Alt+Shift+P` also opens the menu.
 
-## What a sync does
+Chrome 111 or newer.
 
-1. Reloads the inbox tab (opens one if missing) and waits for it to finish loading.
-2. Scrapes PR links under each section header. Collapsed sections are expanded first.
-3. For each PR: if no tab with that PR is open anywhere, opens one in the background.
-4. Files the tab into the section's group. Tabs that are ungrouped or already in a
-   `github · ` group get moved; tabs in groups you made yourself are left alone.
-5. Badge and popup show how many new tabs were opened. `!` means an error (see service worker console).
+## Notes
 
-A sync never closes tabs. Use **Close all tabs** or close a group by hand.
-
-## Debugging the scraper
-
-GitHub ships its own markup, so if a section comes back empty:
-
-1. `chrome://extensions` → this extension → **service worker** link → console.
-   Each sync logs the scraped result including an `expected` count per section
-   (parsed from the `(N)` next to the header) so you can compare with what was found.
-2. Section titles live in `SECTIONS` at the top of `background.js`. Edit them if GitHub renames one.
+- Chrome auto-saves tab groups and pins them to the bookmarks bar. The extension
+  cannot opt out. Right-click the bookmarks bar and untick **Show tab groups**
+  to hide them.
+- Section names live in `SECTIONS` at the top of `background.js`. Edit them if
+  GitHub renames a section.
+- Debug output: `chrome://extensions` → this extension → **service worker**.
